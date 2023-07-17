@@ -1,0 +1,8 @@
+{
+    "destination": "D:\\Workspaces\\temp\\bckp_dest_test",
+    "sources": [
+        "C:\\Not\\Exists",
+        "D:\\Zdjęcia\\dp",
+        "D:\\Program Files\\Audacity\\help"
+    ]
+}
