@@ -26,6 +26,9 @@ def _createPathsIfNotExist(path):
     return True
 
 
+
+os.system('color')
+
 config = None
 try:
     f = open("config.json", encoding='utf-8')
@@ -41,21 +44,34 @@ except ValueError as e:
 destnationBase = config['destination']
 sources = config['sources']
 
-allPaths = [destnationBase] + sources
-print(allPaths)
-for p in allPaths:
-    _createPathsIfNotExist(p)
+sourcesLen = len(sources)
+
+print(f"Analiza wstępna {sourcesLen} folderu/ów...")
+for s in sources:
+    if not os.path.exists(s):
+        print(colored(f"[!] Nie ma folderu do skopiowania: '{s}'", "yellow"))
+        sources.remove(s)
+print(f"Analiza zakończona.")
+sourcesLenAfter = len(sources)
+sourcesLenDiff = sourcesLen - sourcesLenAfter
+if sourcesLenDiff > 0:
+    print(colored(f"Pozostało {sourcesLenAfter} z {sourcesLen} folderów."))
+if sourcesLenAfter == 0:
+    _errorAndExit("[!] Brak danych do skopiowania. Sprawdź, czy ścieżki źródeł są poprawne.")
 
 destination = os.path.join(os.sep, destnationBase, _currentDateTimeString())
 _createPathsIfNotExist(destination)
+
 
 for s in sources:
     print(f"Kopiowanie '{s}'...")
     targetDirName = os.path.basename(os.path.normpath(s))
     shutil.copytree(s, os.path.join(os.sep, destination, targetDirName))
-    print(colored("[✓]", "green"), f"Zrobione.")
+    print(colored("[OK]", "green"), f"Zrobione.")
 
 print(colored(f"Sukces!", "green"))
 print(colored(f"Zakończono tworzenie kopii zapasowej {len(sources)} folderu/ów.", "green"))
+print(f"Znajdziesz ją tutaj:")
+print(destination)
 os.system('pause')
 exit(0)
