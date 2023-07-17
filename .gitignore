@@ -10,7 +10,7 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
+# dist/   # I wanna keep that one
 downloads/
 eggs/
 .eggs/
